@@ -15,15 +15,54 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-dark bg-primary">
         <div class="container-fluid">
-            <span class="navbar-brand ">Country Populations</span>
+            <span class="navbar-brand ">How's the Weather?</span>
         </div>
     </nav>
 
+    <br>
+
     <div class="container">
+        <form action="" id="weatherForm">
+            <div class="form-group">
+                <input type="text" name="cityName" class="form-control" placeholder="Enter a US city">
+                <br>
+                <input type="submit" value="Submit" class="btn btn-primary w-50 "></div>
+        </form>
+
+        <br>
+
+        <div>
+            <div class="card w-75 mb-4">
+                <div class="card-body">
+                  <h5 class="card-title">High</h5>
+                  <p class="card-text"></p>
+                </div>
+            </div>
+            <div class="card w-75 mb-4">
+                <div class="card-body">
+                  <h5 class="card-title">Low</h5>
+                  <p class="card-text"></p>
+                </div>
+            </div>
+            <div class="card w-75 mb-4">
+                <div class="card-body">
+                  <h5 class="card-title">Current</h5>
+                  <p class="card-text"></p>
+                </div>
+            </div>
+            <div class="card w-75 mb-4">
+                <div class="card-body">
+                  <h5 class="card-title">Feels Like</h5>
+                  <p class="card-text"></p>
+                </div>
+            </div>
+
+        </div>
 
     </div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js"></script>

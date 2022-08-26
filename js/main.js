@@ -8,7 +8,78 @@
 // Once the project is complete, commit the project to github and submit the github repository link to the assignment.
 
 console.log('in main.js')
-console.log(APIKey)
+// console.log(APIKey);
 
-// displays the High, Low, Current and Feels Like using JavaScript.
-// so i let a 'p' element within each of the 4 weather cards. i can do htmlinner to insert text into those elements
+
+
+
+// order of ops:
+
+    // user will input a valid US city name 
+
+// form element will capture the submit event of city name
+
+// eventlistener will be created, which will take in the submit event
+    
+// the main fn: handleSubmit, will grab the event's string value which is the city name input by the user to lowercase?, and ...
+    
+// pass it through to the getCityData fn, which will fetch an api json response and return all of the weather data for that city name (need fn for fetch promise, and json promise )
+    
+    // having all of the city weather info , will create a for loop which inserts a string of the temperature into the card body of each card specifically into the blank p element, and append the the new innerhtml to the card body
+    
+    // BONUS: finally, will display a message depending on the weather: put on a sweater , put your bathing suit on , go out for a nice walk etc 
+    
+    
+    
+// create scope for the entire process
+{
+    // form element will capture the submit event of city name
+    // grab the form element
+    let form = document.getElementById('weatherForm')
+    
+    // the main fn: handleSubmit, will grab the event's string value which is the city name input by the user to lowercase, and ...
+    async function handleSubmit(event){
+        event.preventDefault();
+        // grab the value (str) of the user city input on the form
+        let cityInput = event.target.cityName.value.toLowerCase(); // 'Chicago'
+        
+        // input that string value into the api fn to get the object
+        let cityData = await getCityData(cityInput);
+        
+        // call the buildCityCard fn to build and insert cityData numbers into html cards
+        buildCityCard(cityData);
+        
+    }
+    
+    // pass it through to the getCityData fn, which will fetch an api json response and return all of the weather data for that city name (need fn for fetch promise, and json promise )
+    async function getCityData(cityInput){
+        // fetch data from weather API based on user input
+        let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityInput}&appid=${APIKey}&units=imperial`);
+        let data = await res.json();
+        return data // this should return an object with all the weather data... 
+    }
+
+    // having all of the city weather info , will create a for loop which inserts a string of the temperature into the card body of each card specifically into the blank p element, and append the the new innerhtml to the card body
+
+    function buildCityCard(cityData){
+        return 'hodgepodge'
+    }
+    
+
+    
+    // create the p element that will show weather in degrees F for each card
+    // WILL NEED A FOR LOOP TO CREATE ELEMENT FOR EACH
+    let cityHigh = document.querySelector('p');
+    cityHigh.className = 'p ms-3';
+    // WILL NEED TO PASS IN THE API RESULTS FOR HIGH, LOW, CURRENT, FEELS LIKE HERE...
+    cityHigh.innerHTML = '78 degrees';
+    let card1 = document.getElementById('high');
+    card1.append(cityHigh);    
+
+    console.log(getCityData('chicago'))
+    console.log(typeof getCityData('chicago'))
+
+
+    // eventlistener will be created, which will take in the submit event
+    form.addEventListener('submit', handleSubmit)
+};

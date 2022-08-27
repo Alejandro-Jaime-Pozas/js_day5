@@ -8,14 +8,10 @@
 // Once the project is complete, commit the project to github and submit the github repository link to the assignment.
 
 console.log('in main.js')
-// console.log(APIKey);
-
-
-
 
 // order of ops:
 
-    // user will input a valid US city name 
+// user will input a valid US city name 
 
 // form element will capture the submit event of city name
 
@@ -25,7 +21,7 @@ console.log('in main.js')
     
 // pass it through to the getCityData fn, which will fetch an api json response and return all of the weather data for that city name (need fn for fetch promise, and json promise )
     
-    // having all of the city weather info , will create a for loop which inserts a string of the temperature into the card body of each card specifically into the blank p element, and append the the new innerhtml to the card body
+// having all of the city weather info , will create a for loop which inserts a string of the temperature into the card body of each card specifically into the blank p element, and append the the new innerhtml to the card body
     
     // BONUS: finally, will display a message depending on the weather: put on a sweater , put your bathing suit on , go out for a nice walk etc 
     
@@ -56,26 +52,41 @@ console.log('in main.js')
         // fetch data from weather API based on user input
         let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityInput}&appid=${APIKey}&units=imperial`);
         let data = await res.json();
-        return data // this should return an object with all the weather data... 
+        return data // this should return an object with all the weather data for city... 
     }
 
-    // having all of the city weather info , will create a for loop which inserts a string of the temperature into the card body of each card specifically into the blank p element, and append the the new innerhtml to the card body
+    // having all of the city weather data , will create a for loop which inserts a string of the temperature into the card body of each card specifically into the blank p element, and append the the new innerhtml to the card body
 
-    function buildCityCard(cityData){
-        return 'hodgepodge'
-    }
+
+    function buildCityCard(cityData, ){
+
+        let cityName = document.createElement('h1');
+        cityName.className = 'h1 display-5';
+        cityName.innerHTML = cityData.name;
+        let location = document.getElementById('br-name');
+        location.after(cityName);
+
+        
+        let tempItems = [
+            cityData.main.temp,
+            cityData.main.temp_max,
+            cityData.main.temp_min,
+            cityData.main.feels_like,
+        ]
+        
+        // WILL NEED A FOR LOOP TO CREATE ELEMENT FOR EACH
+        for (let i in tempItems){
+            // select the p element that will show weather in degrees F for each card
+            let cityTemp = document.querySelectorAll('p')[i];
+            cityTemp.className = 'p ms-3';
+            // WILL NEED TO PASS IN THE API RESULTS FOR HIGH, LOW, CURRENT, FEELS LIKE HERE...
+            cityTemp.innerHTML = tempItems[i] + '°'; // 
+            let thisCard = document.getElementsByClassName('card')[i];
+            thisCard.append(cityTemp);
+            
+        }
+    }    
     
-
-    
-    // create the p element that will show weather in degrees F for each card
-    // WILL NEED A FOR LOOP TO CREATE ELEMENT FOR EACH
-    let cityHigh = document.querySelector('p');
-    cityHigh.className = 'p ms-3';
-    // WILL NEED TO PASS IN THE API RESULTS FOR HIGH, LOW, CURRENT, FEELS LIKE HERE...
-    cityHigh.innerHTML = '78 degrees';
-    let card1 = document.getElementById('high');
-    card1.append(cityHigh);    
-
     console.log(getCityData('chicago'))
     console.log(typeof getCityData('chicago'))
 
@@ -83,3 +94,9 @@ console.log('in main.js')
     // eventlistener will be created, which will take in the submit event
     form.addEventListener('submit', handleSubmit)
 };
+
+
+// let cityTemp = document.querySelectorAll('p');
+// for (let i in cityTemp){
+//     console.log(i, cityTemp[i])
+// }

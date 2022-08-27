@@ -44,7 +44,7 @@ console.log('in main.js')
         
         // call the buildCityCard fn to build and insert cityData numbers into html cards
         buildCityCard(cityData);
-        
+        weatherRecommendation(cityData);
     }
     
     // pass it through to the getCityData fn, which will fetch an api json response and return all of the weather data for that city name (need fn for fetch promise, and json promise )
@@ -60,13 +60,6 @@ console.log('in main.js')
 
     function buildCityCard(cityData, ){
 
-        let cityName = document.createElement('h1');
-        cityName.className = 'h1 display-5';
-        cityName.innerHTML = cityData.name;
-        let location = document.getElementById('br-name');
-        location.after(cityName);
-
-        
         let tempItems = [
             cityData.main.temp,
             cityData.main.temp_max,
@@ -77,16 +70,57 @@ console.log('in main.js')
         // WILL NEED A FOR LOOP TO CREATE ELEMENT FOR EACH
         for (let i in tempItems){
             // select the p element that will show weather in degrees F for each card
-            let cityTemp = document.querySelectorAll('p')[i];
-            cityTemp.className = 'p ms-3';
+            let cityTemp = document.getElementsByClassName('card-text')[i];
+            console.log(cityTemp);
+            cityTemp.className = 'card-text ms-3 mb-3';
             // WILL NEED TO PASS IN THE API RESULTS FOR HIGH, LOW, CURRENT, FEELS LIKE HERE...
             cityTemp.innerHTML = tempItems[i] + '°'; // 
             let thisCard = document.getElementsByClassName('card')[i];
             thisCard.append(cityTemp);
             
         }
+
+        let cityName = document.getElementById('cityNameText');
+        cityName.className = 'h1 display-5';
+        cityName.innerHTML = cityData.name;
+        let location = document.getElementById('br-name');
+        location.after(cityName);
+
     }    
     
+    function weatherRecommendation(cityData){
+        let message = document.getElementsByClassName('lead')[0];
+        if (cityData.main.temp < 54){ // bg-secondary
+            message.innerHTML = 'You should probably wear a sweater..'
+            // grab the navbar element, submit button element, change colors
+            let navBar = document.querySelector('nav');
+            navBar.className = 'navbar navbar-dark bg-secondary'
+            let submitBtn = document.getElementById('submit');
+            submitBtn.className = 'btn w-50 btn-secondary'
+        } else if (cityData.main.temp < 72){ // bg-success
+            message.innerHTML = "Go out for a walk, the weather's great!"
+            // grab the navbar element, submit button element, change colors
+            let navBar = document.querySelector('nav');
+            navBar.className = 'navbar navbar-dark bg-success'
+            let submitBtn = document.getElementById('submit');
+            submitBtn.className = 'btn w-50 btn-success'
+        } else if (cityData.main.temp < 86){ // bg-warning
+            message.innerHTML = "Nice weather, go outside!"
+            // grab the navbar element, submit button element, change colors
+            let navBar = document.querySelector('nav');
+            navBar.className = 'navbar navbar-dark bg-warning'
+            let submitBtn = document.getElementById('submit');
+            submitBtn.className = 'btn w-50 btn-warning'
+        } else { // bg-danger
+            message.innerHTML = "You should maybe wear some someblock when outside"
+            // grab the navbar element, submit button element, change colors
+            let navBar = document.querySelector('nav');
+            navBar.className = 'navbar navbar-dark bg-danger'
+            let submitBtn = document.getElementById('submit');
+            submitBtn.className = 'btn w-50 btn-danger'
+        }
+    };
+
     console.log(getCityData('chicago'))
     console.log(typeof getCityData('chicago'))
 
@@ -94,9 +128,3 @@ console.log('in main.js')
     // eventlistener will be created, which will take in the submit event
     form.addEventListener('submit', handleSubmit)
 };
-
-
-// let cityTemp = document.querySelectorAll('p');
-// for (let i in cityTemp){
-//     console.log(i, cityTemp[i])
-// }
